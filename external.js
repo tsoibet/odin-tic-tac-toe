@@ -185,8 +185,12 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
 
 function startGame() {
     let playerOneName = document.forms["playerName"]["playerOne"].value;
-    p1.setName(playerOneName);
     let playerTwoName = document.forms["playerName"]["playerTwo"].value;
+    if (playerOneName === playerTwoName) {
+        alert("The two players cannot have the same name!");
+        return false;
+    }
+    p1.setName(playerOneName);
     p2.setName(playerTwoName);
     displayController.start();
     return false;

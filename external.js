@@ -6,26 +6,58 @@ const board = (() => {
     }
     const reset = () => {
         boardArr = ["", "", "", "", "", "", "", "", ""];
+        const positions = document.querySelectorAll(".position");
+        positions.forEach( position => {
+            position.classList.remove("notallowed");
+            position.classList.remove("greyout");
+        });
     }
     const display = () => {
-        const position_0 = document.querySelector("#position-0");
+        const position_0 = document.querySelector("#position-0")
         position_0.textContent = boardArr[0];
+        if (boardArr[0].length) {
+            position_0.classList.add("notallowed");
+        }
         const position_1 = document.querySelector("#position-1");
         position_1.textContent = boardArr[1];
+        if (boardArr[1].length) {
+            position_1.classList.add("notallowed");
+        }
         const position_2 = document.querySelector("#position-2");
         position_2.textContent = boardArr[2];
+        if (boardArr[2].length) {
+            position_2.classList.add("notallowed");
+        }
         const position_3 = document.querySelector("#position-3");
         position_3.textContent = boardArr[3];
+        if (boardArr[3].length) {
+            position_3.classList.add("notallowed");
+        }
         const position_4 = document.querySelector("#position-4");
         position_4.textContent = boardArr[4];
+        if (boardArr[4].length) {
+            position_4.classList.add("notallowed");
+        }
         const position_5 = document.querySelector("#position-5");
         position_5.textContent = boardArr[5];
+        if (boardArr[5].length) {
+            position_5.classList.add("notallowed");
+        }
         const position_6 = document.querySelector("#position-6");
         position_6.textContent = boardArr[6];
+        if (boardArr[6].length) {
+            position_6.classList.add("notallowed");
+        }
         const position_7 = document.querySelector("#position-7");
         position_7.textContent = boardArr[7];
+        if (boardArr[7].length) {
+            position_7.classList.add("notallowed");
+        }
         const position_8 = document.querySelector("#position-8");
         position_8.textContent = boardArr[8];
+        if (boardArr[8].length) {
+            position_8.classList.add("notallowed");
+        }
     }
     return {
         getBoard,
@@ -69,6 +101,7 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
         const positions = document.querySelectorAll(".position");
         positions.forEach( position => {
             position.addEventListener("click", placeMarker);
+            position.classList.add("pointer");
         });
     }
 
@@ -76,11 +109,12 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
         const positions = document.querySelectorAll(".position");
         positions.forEach( position => {
             position.removeEventListener("click", placeMarker);
+            position.classList.add("notallowed");
+            position.classList.add("greyout");
         });
     }
 
     const checkEnd = (player) => {
-        const message = document.querySelector("#gameInfo");
         if ((gameBoard.getBoard()[0] === gameBoard.getBoard()[1] && gameBoard.getBoard()[1] === gameBoard.getBoard()[2] && gameBoard.getBoard()[0] !== "") || 
             (gameBoard.getBoard()[3] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[5] && gameBoard.getBoard()[3] !== "") ||
             (gameBoard.getBoard()[6] === gameBoard.getBoard()[7] && gameBoard.getBoard()[7] === gameBoard.getBoard()[8] && gameBoard.getBoard()[6] !== "") ||
@@ -90,10 +124,10 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
             (gameBoard.getBoard()[0] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[8] && gameBoard.getBoard()[0] !== "") ||
             (gameBoard.getBoard()[2] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[6] && gameBoard.getBoard()[2] !== "")) {
                 if (player === 1) {
-                    setMessage(`${playerOne.getName()} Won the game!`);
+                    setMessage(`${playerOne.getName()} won the game!`);
                 }
                 else {
-                    setMessage(`${playerTwo.getName()} Won the game!`);
+                    setMessage(`${playerTwo.getName()} won the game!`);
                 }
                 disableListener();
             }
@@ -140,7 +174,7 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
 
         if (getTurn() === 1) setMessage(`${playerOne.getName()}'s turn now.`);
         else setMessage(`${playerTwo.getName()}'s turn now.`);
-        
+
         enableListener();
     };
 

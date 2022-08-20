@@ -1,23 +1,110 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-size: calc(16px + 0.4vh + 0.4vw);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+    height: 100vh;
+
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-auto-flow: row;
+    gap: 2rem;
+
+    padding: 2rem 4rem;
+}
+
 header {
     text-align: center;
+    font-size: 2rem;
+}
+
+#container {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    grid-auto-flow: row;
+    gap: 1.2rem;
+    justify-items: center;
+}
+
+#playerInfo form {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-auto-flow: row;
+    gap: 1rem;
+    justify-items: center;
+}
+
+.players {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.player {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-auto-flow: row;
+    gap: 0.2rem;
+    justify-items: center;
+}
+
+.player input {
+    width: 8.5rem;
+    padding: 0.2rem 0.4rem;
+}
+
+.big {
+    font-size: 1.5rem;
+}
+
+input[type=submit] {
+    padding: 0.2rem 0.6rem;
+    font-size: 0.9rem;
 }
 
 #gameBoard {
     display: grid;
     grid-template-columns: auto auto auto;
     grid-template-rows: auto auto auto;
-    justify-content: center;
+    align-self: center;
 }
 
 .position {
     width: 100px;
     height: 100px;
     border: 0.2rem solid black;
+    margin: -0.1rem;
+    font-weight: bold;
+    cursor: default;
 
     display: grid;
     place-items: center;
+
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.notallowed {
+    cursor: not-allowed;
+}
+
+.greyout {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#gameInfo {
+    min-height: 1.2rem;
 }
 
 footer {
     text-align: center;
+    font-size: 0.8rem;
 }

@@ -60,6 +60,14 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
         turn += 1;
     };
 
+    const message = document.querySelector("#gameInfo");
+    const clearMessage = () => {
+        message.textContent = "";
+    }
+    const setMessage = (msg) => {
+        message.textContent = msg;
+    }
+    
     const enableListener = () => {
         const positions = document.querySelectorAll(".position");
         positions.forEach( position => {
@@ -75,6 +83,7 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
     }
 
     const checkEnd = (player) => {
+        const message = document.querySelector("#gameInfo");
         if ((gameBoard.getBoard()[0] === gameBoard.getBoard()[1] && gameBoard.getBoard()[1] === gameBoard.getBoard()[2] && gameBoard.getBoard()[0] !== 0) || 
             (gameBoard.getBoard()[3] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[5] && gameBoard.getBoard()[3] !== 0) ||
             (gameBoard.getBoard()[6] === gameBoard.getBoard()[7] && gameBoard.getBoard()[7] === gameBoard.getBoard()[8] && gameBoard.getBoard()[6] !== 0) ||
@@ -83,19 +92,23 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
             (gameBoard.getBoard()[2] === gameBoard.getBoard()[5] && gameBoard.getBoard()[5] === gameBoard.getBoard()[8] && gameBoard.getBoard()[2] !== 0) || 
             (gameBoard.getBoard()[0] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[8] && gameBoard.getBoard()[0] !== 0) ||
             (gameBoard.getBoard()[2] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[6] && gameBoard.getBoard()[2] !== 0)) {
-                if (player === 1) alert(`${playerOne.getName()} Won!`);
-                else alert(`${playerTwo.getName()} Won!`);
+                if (player === 1) {
+                    setMessage(`${playerOne.getName()} Won the game!`);
+                }
+                else {
+                    setMessage(`${playerTwo.getName()} Won the game!`);
+                }
                 disableListener();
             }
         else if (Math.min(...gameBoard.getBoard()) > 0) {
-            alert("Draw!");
+            setMessage("It's a draw. Play again!");
             disableListener();
         }
     };
 
     const placeMarker = (event) => {
         if (event.target.textContent == playerOne.getMarker() || event.target.textContent == playerTwo.getMarker()) {
-            alert("This position has been marked already! Please choose again.");
+            alert("This spot has been taken already. Choose again!");
             return;
         }
         pos = event.target.id.slice(-1);
@@ -115,6 +128,7 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
 
         gameBoard.reset();
         gameBoard.display();
+        clearMessage();
         enableListener();
     };
 

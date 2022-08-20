@@ -1,11 +1,11 @@
 const board = (() => {
-    let boardArr = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let boardArr = ["", "", "", "", "", "", "", "", ""];
     const getBoard = () => boardArr;
     const setBoard = (position, marker) => {
         boardArr[position] = marker;
     }
     const reset = () => {
-        boardArr = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        boardArr = ["", "", "", "", "", "", "", "", ""];
     }
     const display = () => {
         const position_0 = document.querySelector("#position-0");
@@ -49,8 +49,8 @@ const Player = (marker) => {
     }
 }
 
-const p1 = Player(1);
-const p2 = Player(2);
+const p1 = Player("O");
+const p2 = Player("X");
 
 const displayController = ((gameBoard, playerOne, playerTwo) => {
 
@@ -84,14 +84,14 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
 
     const checkEnd = (player) => {
         const message = document.querySelector("#gameInfo");
-        if ((gameBoard.getBoard()[0] === gameBoard.getBoard()[1] && gameBoard.getBoard()[1] === gameBoard.getBoard()[2] && gameBoard.getBoard()[0] !== 0) || 
-            (gameBoard.getBoard()[3] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[5] && gameBoard.getBoard()[3] !== 0) ||
-            (gameBoard.getBoard()[6] === gameBoard.getBoard()[7] && gameBoard.getBoard()[7] === gameBoard.getBoard()[8] && gameBoard.getBoard()[6] !== 0) ||
-            (gameBoard.getBoard()[0] === gameBoard.getBoard()[3] && gameBoard.getBoard()[3] === gameBoard.getBoard()[6] && gameBoard.getBoard()[0] !== 0) || 
-            (gameBoard.getBoard()[1] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[7] && gameBoard.getBoard()[1] !== 0) || 
-            (gameBoard.getBoard()[2] === gameBoard.getBoard()[5] && gameBoard.getBoard()[5] === gameBoard.getBoard()[8] && gameBoard.getBoard()[2] !== 0) || 
-            (gameBoard.getBoard()[0] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[8] && gameBoard.getBoard()[0] !== 0) ||
-            (gameBoard.getBoard()[2] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[6] && gameBoard.getBoard()[2] !== 0)) {
+        if ((gameBoard.getBoard()[0] === gameBoard.getBoard()[1] && gameBoard.getBoard()[1] === gameBoard.getBoard()[2] && gameBoard.getBoard()[0] !== "") || 
+            (gameBoard.getBoard()[3] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[5] && gameBoard.getBoard()[3] !== "") ||
+            (gameBoard.getBoard()[6] === gameBoard.getBoard()[7] && gameBoard.getBoard()[7] === gameBoard.getBoard()[8] && gameBoard.getBoard()[6] !== "") ||
+            (gameBoard.getBoard()[0] === gameBoard.getBoard()[3] && gameBoard.getBoard()[3] === gameBoard.getBoard()[6] && gameBoard.getBoard()[0] !== "") || 
+            (gameBoard.getBoard()[1] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[7] && gameBoard.getBoard()[1] !== "") || 
+            (gameBoard.getBoard()[2] === gameBoard.getBoard()[5] && gameBoard.getBoard()[5] === gameBoard.getBoard()[8] && gameBoard.getBoard()[2] !== "") || 
+            (gameBoard.getBoard()[0] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[8] && gameBoard.getBoard()[0] !== "") ||
+            (gameBoard.getBoard()[2] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[6] && gameBoard.getBoard()[2] !== "")) {
                 if (player === 1) {
                     setMessage(`${playerOne.getName()} Won the game!`);
                 }
@@ -100,9 +100,15 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
                 }
                 disableListener();
             }
-        else if (Math.min(...gameBoard.getBoard()) > 0) {
-            setMessage("It's a draw. Play again!");
-            disableListener();
+        else {
+            let taken = "";
+            for (let position of gameBoard.getBoard()) {
+                taken += position;
+            }
+            if (taken.length === 9) {
+                setMessage("It's a draw. Play again!");
+                disableListener();
+            }
         }
     };
 

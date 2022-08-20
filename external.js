@@ -35,17 +35,22 @@ const board = (() => {
     };
 })();
 
-const Player = (name, marker) => {
+const Player = (marker) => {
+    let name = "Unknown player";
+    const setName = (input) => {
+        name = input;
+    }
     const getName = () => name;
     const getMarker = () => marker;
     return {
+        setName,
         getName,
         getMarker,
     }
 }
 
-const p1 = Player('Player One', 1);
-const p2 = Player('Player Two', 2);
+const p1 = Player(1);
+const p2 = Player(2);
 
 const displayController = ((gameBoard, playerOne, playerTwo) => {
 
@@ -54,6 +59,20 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
     const nextTurn = () => {
         turn += 1;
     };
+
+    const enableListener = () => {
+        const positions = document.querySelectorAll(".position");
+        positions.forEach( position => {
+            position.addEventListener("click", placeMarker);
+        });
+    }
+
+    const disableListener = () => {
+        const positions = document.querySelectorAll(".position");
+        positions.forEach( position => {
+            position.removeEventListener("click", placeMarker);
+        });
+    }
 
     const checkEnd = (player) => {
         if ((gameBoard.getBoard()[0] === gameBoard.getBoard()[1] && gameBoard.getBoard()[1] === gameBoard.getBoard()[2] && gameBoard.getBoard()[0] !== 0) || 
@@ -66,18 +85,16 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
             (gameBoard.getBoard()[2] === gameBoard.getBoard()[4] && gameBoard.getBoard()[4] === gameBoard.getBoard()[6] && gameBoard.getBoard()[2] !== 0)) {
                 if (player === 1) alert(`${playerOne.getName()} Won!`);
                 else alert(`${playerTwo.getName()} Won!`);
-                gameBoard.reset();
-                gameBoard.display();
+                disableListener();
             }
         else if (Math.min(...gameBoard.getBoard()) > 0) {
             alert("Draw!");
-            gameBoard.reset();
-            gameBoard.display();
+            disableListener();
         }
     };
 
     const placeMarker = (event) => {
-        if (event.target.textContent !== "0") {
+        if (event.target.textContent == playerOne.getMarker() || event.target.textContent == playerTwo.getMarker()) {
             alert("This position has been marked already! Please choose again.");
             return;
         }
@@ -91,13 +108,14 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
         nextTurn();
     };
 
-    const positions = document.querySelectorAll(".position");
-    positions.forEach( position => {
-        position.addEventListener("click", placeMarker);
-    });
-
     const start = () => {
+
+        const startButton = document.querySelector("#startButton");
+        startButton.value = "Reset";
+
+        gameBoard.reset();
         gameBoard.display();
+        enableListener();
     };
 
     return {
@@ -105,4 +123,11 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
     };
 })(board, p1, p2);
 
-displayController.start();
+function startGame() {
+    let playerOneName = document.forms["playerName"]["playerOne"].value;
+    p1.setName(playerOneName);
+    let playerTwoName = document.forms["playerName"]["playerTwo"].value;
+    p2.setName(playerTwoName);
+    displayController.start();
+    return false;
+}

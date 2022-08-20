@@ -13,6 +13,21 @@
         Tic-Tac-Toe
     </header>
     <div id="container">
+        <div id="playerInfo">
+            <form name="playerName" onsubmit="return startGame()">
+                <div id="player-1" class="player">
+                    <label for="playerOne">Player 1: </label>
+                    <input type="text" name="playerOne" id="playerOne" required>
+                </div>
+                <div id="player-2" class="player">
+                    <label for="playerTwo">Player 2: </label>
+                    <input type="text" name="playerTwo" id="playerTwo" required>
+                </div>
+                <div id="start">
+                    <input type="submit" value="Start" id="startButton">
+                </div>
+            </form>
+        </div>
         <div id="gameBoard">
             <div id="position-0" class="position col-1 row-1"></div>
             <div id="position-1" class="position col-2 row-1"></div>
@@ -24,7 +39,7 @@
             <div id="position-7" class="position col-2 row-3"></div>
             <div id="position-8" class="position col-3 row-3"></div>
         </div>
-        <div id="playerInfo">
+        <div id="gameInfo">
 
         </div>
     </div>

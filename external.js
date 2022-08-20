@@ -61,9 +61,6 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
     };
 
     const message = document.querySelector("#gameInfo");
-    const clearMessage = () => {
-        message.textContent = "";
-    }
     const setMessage = (msg) => {
         message.textContent = msg;
     }
@@ -108,6 +105,12 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
             if (taken.length === 9) {
                 setMessage("It's a draw. Play again!");
                 disableListener();
+            } 
+            else {
+                if (player === 1) {
+                    setMessage(`${playerTwo.getName()}'s turn now.`);
+                }
+                else setMessage(`${playerOne.getName()}'s turn now.`);
             }
         }
     };
@@ -123,7 +126,7 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
         }
         else gameBoard.setBoard(pos, playerTwo.getMarker());
         gameBoard.display();
-        setTimeout(checkEnd, 1, getTurn());
+        checkEnd(getTurn());
         nextTurn();
     };
 
@@ -134,7 +137,10 @@ const displayController = ((gameBoard, playerOne, playerTwo) => {
 
         gameBoard.reset();
         gameBoard.display();
-        clearMessage();
+
+        if (getTurn() === 1) setMessage(`${playerOne.getName()}'s turn now.`);
+        else setMessage(`${playerTwo.getName()}'s turn now.`);
+        
         enableListener();
     };
 
